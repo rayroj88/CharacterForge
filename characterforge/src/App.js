@@ -10,19 +10,11 @@ function RaceButton({ race, onClick }) {
   );
 }
 
-function RaceDetails({ details }) {
-  return (
-    <div id="race-details">
-      {details}
-    </div>
-  );
-}
-
 function App() {
   return (
     <div className="App">
       <div className="Racepage">
-      <h1>Dungeons & Dragons Fifth Edition Races</h1>
+      <h3>Dungeons & Dragons Fifth Edition Races</h3>
         <div id="race-buttons">
           {/* Button for each race */}
           {["Dwarf", "Elf", "Halfling", "Human", "Dragonborn", "Gnome", "Half-Elf", "Half-Orc", "Tiefling"].map(race => (
