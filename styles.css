@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  #race-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .race-button {
+    padding: 30px;
+    margin: 5px 0;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    flex-grow: 1;
+  }
+  
+  /* Different colors for each race button */
+  button[data-race="Dwarf"] {
+    background-color: #FFD700; /* Gold */
+  }
+  
+  button[data-race="Elf"] {
+    background-color: #008000; /* Green */
+  }
+  
+  button[data-race="Halfling"] {
+    background-color: #FF6347; /* Tomato */
+  }
+  
+  button[data-race="Human"] {
+    background-color: #4169E1; /* Royal Blue */
+  }
+  
+  button[data-race="Dragonborn"] {
+    background-color: #800080; /* Purple */
+  }
+  
+  button[data-race="Gnome"] {
+    background-color: #FFA500; /* Orange */
+  }
+  
+  button[data-race="Half-Elf"] {
+    background-color: #FF69B4; /* Hot Pink */
+  }
+  
+  button[data-race="Half-Orc"] {
+    background-color: #4682B4; /* Steel Blue */
+  }
+  
+  button[data-race="Tiefling"] {
+    background-color: #8B4513; /* Saddle Brown */
+  }
+  
+  .race-button:hover {
+    opacity: 0.8;
+  }

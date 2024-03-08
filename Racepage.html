@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D 5e Races</title>
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h3>Select a race</h3>
+  <div id="race-buttons">
+    <!-- Button for each race -->
+    <button class="race-button" data-race="Dwarf" onclick="showDetails('Dwarf')">Dwarf</button>
+    <button class="race-button" data-race="Elf" onclick="showDetails('Elf')">Elf</button>
+    <button class="race-button" data-race="Halfling" onclick="showDetails('Halfling')">Halfling</button>
+    <button class="race-button" data-race="Human" onclick="showDetails('Human')">Human</button>
+    <button class="race-button" data-race="Dragonborn" onclick="showDetails('Dragonborn')">Dragonborn</button>
+    <button class="race-button" data-race="Gnome" onclick="showDetails('Gnome')">Gnome</button>
+    <button class="race-button" data-race="Half-Elf" onclick="showDetails('Half-Elf')">Half-Elf</button>
+    <button class="race-button" data-race="Half-Orc" onclick="showDetails('Half-Orc')">Half-Orc</button>
+    <button class="race-button" data-race="Tiefling" onclick="showDetails('Tiefling')">Tiefling</button>
+  </div>
+
+  <!-- Placeholder for race details -->
+  <div id="race-details">
+    <!-- Race details will be displayed here -->
+  </div>
+
+  <script>
+    function showDetails(race) {
+      // Example of race details. Replace this with actual details.
+      let raceDetails = {
+        "Dwarf": "Dwarves are a hearty and resilient race known for their toughness and craftsmanship.",
+        "Elf": "Elves are graceful and long-lived beings attuned to the natural world.",
+        "Halfling": "Halflings are small, nimble folk known for their luck and love of comfort.",
+        "Human": "Humans are diverse and adaptable, making their mark in all corners of the world.",
+        "Dragonborn": "Dragonborn are proud and honorable warriors with draconic ancestry.",
+        "Gnome": "Gnomes are clever and curious inventors who excel in magic and tinkering.",
+        "Half-Elf": "Half-Elves are charismatic and diplomatic individuals with mixed human and elven heritage.",
+        "Half-Orc": "Half-Orcs are fierce and resilient warriors born of orc and human parentage.",
+        "Tiefling": "Tieflings are enigmatic and often misunderstood individuals with infernal ancestry."
+      };
+
+      // Display race details
+      document.getElementById("race-details").innerHTML = raceDetails[race];
+    }
+  </script>
+</body>
+</html>
