@@ -24,6 +24,12 @@ const Picksubrace = (race) => {
                 <button className='subrace-button' id='stout'>Stout</button>
             </>
         )}
+        {race === 'gnome' && (
+            <>
+                <button className='subrace-button' id='forest-gnome'>Forest Gnome</button>
+                <button className='subrace-button' id='rock-gnome'>Rock Gnome</button>
+            </>
+        )}
       </div>
     );
 }

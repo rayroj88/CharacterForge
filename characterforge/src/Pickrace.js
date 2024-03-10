@@ -4,7 +4,7 @@ const Pickrace = () => {
 
     return (
       <div className="Racepage">
-      <h3>Dungeons & Dragons Fifth Edition Races</h3>
+      <h3>Select a Race</h3>
         <button className='race-button' id='human'>Human</button>
         <button className='race-button' id='half-orc'>Half-Orc</button>
         <button className='race-button' id='elf'>Elf</button>
