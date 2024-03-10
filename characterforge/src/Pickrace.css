@@ -1,0 +1,66 @@
+.Pickrace {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  
+  .race-button {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .race-button:hover {
+    transform: scale(1.3); 
+  }
+  
+  #human {
+    background-color: #3498db; /* Blue */
+    color: white;
+  }
+  
+  #half-orc {
+    background-color: #2ecc71; /* Green */
+    color: white;
+  }
+  
+  #elf {
+    background-color: #e74c3c; /* Red */
+    color: white;
+  }
+  
+  #half-elf {
+    background-color: #9b59b6; /* Purple */
+    color: white;
+  }
+  
+  #dwarf {
+    background-color: #f1c40f; /* Yellow */
+    color: white;
+  }
+  
+  #gnome {
+    background-color: #1abc9c; /* Turquoise */
+    color: white;
+  }
+  
+  #halfling {
+    background-color: #34495e; /* Dark Gray */
+    color: white;
+  }
+  
+  #dragonborn {
+    background-color: #f39c12; /* Orange */
+    color: white;
+  }
+  
+  #tiefling {
+    background-color: #c0392b; /* Dark Red */
+    color: white;
+  }
