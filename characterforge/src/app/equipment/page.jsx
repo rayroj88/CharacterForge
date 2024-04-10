@@ -1,69 +1,150 @@
 'use client'
 
 import { useState } from 'react';
+import Link from "next/link"; // Import Link from React Router
 
-// List of equipment options with detailed information
-const equipmentOptions = [
-  {
-    name: 'Backpack',
-    description: 'A backpack can hold many items, making it useful for adventurers on the go.',
-    cost: '2 gp',
-    weight: '5 lb'
-  },
-  {
-    name: 'Bedroll',
-    description: 'A bedroll is a simple and portable sleeping mat, providing comfort during long journeys.',
-    cost: '1 gp',
-    weight: '7 lb'
-  },
-  // Add more equipment options as needed
-];
+export default function ScoreCalculation() {
+  // Array of objects containing score value and corresponding image URL
+  const standardArray = [
+    { score: 15, imageUrl: '/score/d15.png' },
+    { score: 14, imageUrl: '/score/d14.png' },
+    { score: 13, imageUrl: '/score/d13.png' },
+    { score: 12, imageUrl: '/score/d12.png' },
+    { score: 10, imageUrl: '/score/d10.png' },
+    { score: 8, imageUrl: '/score/d8.png' }
+  ];
 
-export default function ChooseEquipment() {
-  // State to store selected equipment
-  const [selectedEquipment, setSelectedEquipment] = useState([]);
+  // State to keep track of score assignments to abilities
+  const [scores, setScores] = useState({
+    strength: '',
+    dexterity: '',
+    constitution: '',
+    intelligence: '',
+    wisdom: '',
+    charisma: '',
+  });
 
-  // Function to handle equipment selection
-  const toggleEquipmentSelection = (equipmentName) => {
-    if (selectedEquipment.includes(equipmentName)) {
-      setSelectedEquipment(selectedEquipment.filter(item => item !== equipmentName));
+  // Function to update score assignment
+  const assignScore = (ability, score) => {
+    const updatedScores = { ...scores, [ability]: score };
+    const scoreValues = Object.values(updatedScores).filter(Boolean); // Filter out empty values
+    const isUnique = new Set(scoreValues).size === scoreValues.length; // Check if all values are unique
+    if (isUnique) {
+      setScores(updatedScores);
     } else {
-      setSelectedEquipment([...selectedEquipment, equipmentName]);
+      alert('Each ability must have a unique score.');
     }
+  };
+
+  // Function to handle drag start event
+  const handleDragStart = (e, score) => {
+    e.dataTransfer.setData('score', score);
+  };
+
+  // Function to handle drag over event
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  // Function to handle drop event
+  const handleDrop = (e, ability) => {
+    const score = e.dataTransfer.getData('score');
+    if (score) {
+      assignScore(ability, score);
+      const draggedScore = standardArray.find(item => item.score.toString() === score);
+      e.target.innerHTML = `<img src=${draggedScore.imageUrl} alt="Score ${score}" class="score" style="width: 100px; height: 100px;">`;
+
+      // Hide the dragged image
+      const draggedImage = document.getElementById(score); // Assuming your draggable image has the same id as its score
+      if (draggedImage) {
+        draggedImage.style.display = 'none';
+      }
+    }
+  };
+
+  // Function to reset all draggable objects
+  const resetDraggables = () => {
+    // Show all draggable images
+    standardArray.forEach(scoreObj => {
+      const draggableImage = document.getElementById(scoreObj.score);
+      if (draggableImage) {
+        draggableImage.style.display = 'block';
+      }
+    });
+
+    // Clear all scores
+    setScores({
+      strength: '',
+      dexterity: '',
+      constitution: '',
+      intelligence: '',
+      wisdom: '',
+      charisma: '',
+    });
   };
 
   return (
     <main className="p-6">
-      <h1 className="text-3xl font-bold mb-4 text-center">Choose Your Equipment</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {equipmentOptions.map((equipment, index) => (
-          <div key={index} className={`border rounded p-4 ${selectedEquipment.includes(equipment.name) ? 'bg-gray-200' : ''}`}>
-            <h2 className="text-xl font-bold mb-2">{equipment.name}</h2>
-            <p className="mb-2">{equipment.description}</p>
-            <p className="mb-2"><span className="font-semibold">Cost:</span> {equipment.cost}</p>
-            <p className="mb-2"><span className="font-semibold">Weight:</span> {equipment.weight}</p>
-            <button
-              className={`w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700`}
-              onClick={() => toggleEquipmentSelection(equipment.name)}
+      <h1 className="text-3xl font-bold mb-4 text-center">Assign Your Ability Scores</h1>
+      <div className="flex items-center justify-center">
+        {Object.keys(scores).map((ability) => (
+          <div key={ability} className="mb-4 flex flex-col items-center mr-4">
+            <img src={`/score/${ability}.png`} alt={`${ability} icon`} className="mb-2 w-16 h-16" />
+            <label className="mb-1">{ability.charAt(0).toUpperCase() + ability.slice(1)}:</label>
+            <div
+              className="ability-dropzone"
+              onDragOver={(e) => handleDragOver(e)}
+              onDrop={(e) => handleDrop(e, ability)}
+              style={{
+                border: '1px solid white',
+                padding: '5px',
+                width: '100px',
+                height: '100px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
-              {selectedEquipment.includes(equipment.name) ? 'Deselect' : 'Select'}
-            </button>
+              {scores[ability] ? (
+                <img
+                  src={`/score/d${scores[ability]}.png`}
+                  alt={`Score ${scores[ability]}`}
+                  className="score"
+                  style={{ width: '90px', height: '90px' }}
+                />
+              ) : (
+                <div className="score-placeholder">Drop score here</div>
+              )}
+            </div>
           </div>
         ))}
       </div>
-
-      {selectedEquipment.length > 0 && (
-        <div className="mt-6 text-center">
-          <p className="text-lg font-bold">You have selected:</p>
-          <ul className="list-disc ml-6">
-            {selectedEquipment.map((equipment, index) => (
-              <li key={index}>{equipment}</li>
-            ))}
-          </ul>
-          {/* You can add further actions or navigation here, e.g., to proceed to the next step */}
+      <div className="flex justify-center">
+        <div className="flex">
+          {standardArray.map((scoreObj) => (
+            <img
+              key={scoreObj.score}
+              id={scoreObj.score}
+              src={scoreObj.imageUrl}
+              alt={`Score ${scoreObj.score}`}
+              className="score-draggable"
+              draggable
+              onDragStart={(e) => handleDragStart(e, scoreObj.score)}
+              style={{ width: '100px', height: '100px', marginRight: '10px' }}
+            />
+          ))}
         </div>
-      )}
+      </div>
+      <div className="mt-6 flex justify-center">
+        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={resetDraggables}>
+          Reset
+        </button>
+        <Link href="/background">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-4">
+            Submit Scores
+          </button>
+        </Link>
+      </div>
     </main>
   );
 }

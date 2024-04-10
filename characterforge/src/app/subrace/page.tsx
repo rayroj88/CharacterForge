@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import Link from 'next/link';
 
 // This could be a static object or fetched from an API/database
@@ -11,53 +11,53 @@ const allSubraces = {
     {
       name: 'Hill Dwarf',
       description: 'Hill Dwarves have keen senses, deep intuition, and remarkable resilience.',
-      imageUrl: '/hill_dwarf.svg',
+      imageUrl: '/sub/hilldwarf.png',
     },
     {
       name: 'Mountain Dwarf',
       description: 'Mountain Dwarves are strong and hardy, accustomed to a difficult life in rugged terrain.',
-      imageUrl: '/mountain_dwarf.svg',
+      imageUrl: '/sub/mountaindwarf.png',
     },
   ],
   elf: [
     {
       name: 'High Elf',
       description: 'High Elves are known for their keen intellect and mastery of magic.',
-      imageUrl: '/high_elf.svg',
+      imageUrl: '/sub/highelf.png',
     },
     {
       name: 'Wood Elf',
       description: 'Wood Elves are stealthy and nimble, with a deep connection to nature.',
-      imageUrl: '/wood_elf.svg',
+      imageUrl: '/sub/woodelf.png',
     },
     {
       name: 'Dark Elf (Drow)',
       description: 'Drow are adept in dark magic, with superior vision in darkness.',
-      imageUrl: '/dark_elf.svg',
+      imageUrl: '/sub/drow.png',
     },
   ],
   halfling: [
     {
       name: 'Lightfoot Halfling',
       description: 'Lightfoot Halflings are stealthy and skilled at evading notice.',
-      imageUrl: '/lightfoot_halfling.svg',
+      imageUrl: '/sub/lightfoothalfling.png',
     },
     {
       name: 'Stout Halfling',
       description: 'Stout Halflings are hardy and resistant, with a natural resilience.',
-      imageUrl: '/stout_halfling.svg',
+      imageUrl: '/sub/stouthalfling.png',
     },
   ],
   gnome: [
     {
       name: 'Forest Gnome',
       description: 'Forest Gnomes have a knack for stealth and illusion, with a love of animals.',
-      imageUrl: '/forest_gnome.svg',
+      imageUrl: '/sub/forestgnome.png',
     },
     {
       name: 'Rock Gnome',
       description: 'Rock Gnomes are tinkerers and inventors, known for their creativity and technical prowess.',
-      imageUrl: '/rock_gnome.svg',
+      imageUrl: '/sub/rockgnome.png',
     },
   ],
 };
@@ -89,18 +89,19 @@ export default function PickSubrace() {
   return (
     <main className="flex flex-col min-h-screen items-center justify-center p-24 bg-fantasy-landscape bg-cover">
       <h1 className="text-4xl font-bold text-center mb-12">Choose Your {race.charAt(0).toUpperCase() + race.slice(1)} Subrace</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className={`flex justify-center gap-8 ${subraces.length < 3 ? 'w-auto' : 'w-full'}`}>
         {subraces.map((subrace) => (
-          <div key={subrace.name} className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer" onClick={handleSubraceClick}>
+          <div key={subrace.name} className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer relative" onClick={handleSubraceClick}>
             <Image src={subrace.imageUrl} alt={subrace.name} width={500} height={300} objectFit="cover" />
-            <div className="p-5">
-              <h2 className="text-2xl font-bold">{subrace.name}</h2>
-              <p className="text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">{subrace.description}</p>
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 bg-black bg-opacity-50 text-white">
+              <div className="p-5 text-center">
+                <h2 className="text-2xl font-bold">{subrace.name}</h2>
+                <p className="text-sm">{subrace.description}</p>
+              </div>
             </div>
           </div>
         ))}
       </div>
-      {/* Removed the Link to class selection since it's handled in handleSubraceClick now */}
     </main>
   );
 }
