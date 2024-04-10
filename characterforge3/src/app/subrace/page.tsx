@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Link from 'next/link';
 
 // This could be a static object or fetched from an API/database
