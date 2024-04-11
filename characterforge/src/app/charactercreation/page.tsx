@@ -37,7 +37,7 @@ export default function PickRace() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {races.map((race) => (
             <div key={race.name} className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer relative" onClick={() => selectRace(race)}>
-              <Image src={race.imageUrl} alt={race.name} width={500} height={300} objectFit="cover" />
+              <Image src={race.imageUrl} alt={race.name} width={500} height={300} />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-500 bg-black bg-opacity-50 text-white">
                 <div className="p-5 text-center">
                   <h2 className="text-2xl font-bold">{race.name}</h2>
