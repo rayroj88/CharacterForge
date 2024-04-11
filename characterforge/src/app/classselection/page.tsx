@@ -1,5 +1,8 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 
 // Define an array of classes from the D&D Player's Handbook
 const classes = [
@@ -64,6 +67,12 @@ const classes = [
       imageUrl: "/classes/wizard.png", // Replace with your actual image path
     },
   ];
+
+  const handleClassClick = (cls) => {
+    localStorage.setItem('selectedClass', cls.name);
+    console.log(localStorage.getItem('selectedClass'));
+    router.push('/score'); // Navigate to class selection page
+  }
   
 
   export default function PickClass() {
@@ -74,7 +83,7 @@ const classes = [
           {classes.map((cls) => (
             <Link key={cls.name} href="/score" passHref>
               <div className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer relative">
-                <Image src={cls.imageUrl} alt={cls.name} width={500} height={300} objectFit="cover" />
+                <Image src={cls.imageUrl} alt={cls.name} width={500} height={300} />
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex justify-center items-center">
                   {/* Ensure text container is not affecting the centering */}
                   <div className="text-center p-5 text-white">
