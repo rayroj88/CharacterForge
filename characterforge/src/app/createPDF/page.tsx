@@ -13,6 +13,12 @@ const CharacterSheetPage = () => {
       race: localStorage.getItem('selectedRace'),
       subrace: localStorage.getItem('selectedSubrace'),
       class: localStorage.getItem('selectedClass'),
+      strength: localStorage.getItem('strength'),
+      dexterity: localStorage.getItem('dexterity'),
+      constitution: localStorage.getItem('constitution'),
+      intelligence: localStorage.getItem('intelligence'),
+      wisdom: localStorage.getItem('wisdom'),
+      charisma: localStorage.getItem('charisma'),
       // Add other character data properties here
     };
     setCharacterData(data);

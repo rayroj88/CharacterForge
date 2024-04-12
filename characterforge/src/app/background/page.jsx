@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 // List of backgrounds with detailed information
 const backgrounds = [
@@ -175,6 +176,7 @@ const backgrounds = [
   export default function ChooseBackground() {
     // State to store selected background
     const [selectedBackground, setSelectedBackground] = useState('');
+    const router = useRouter();
   
     // Function to handle background selection
     const handleSelectBackground = (backgroundName) => {
@@ -211,14 +213,12 @@ const backgrounds = [
               </div>
               {/* Use Next.js Link component for navigation */}
               <div className="text-center mt-4">
-                <Link href="/equipment">
-                  <span className={`w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ${selectedBackground === background.name ? 'opacity-50 cursor-not-allowed' : ''}`}
-                     onClick={() => handleSelectBackground(background.name)}
-                     disabled={selectedBackground === background.name}
-                  >
-                    {selectedBackground === background.name ? 'Selected' : 'Select'}
-                  </span>
-                </Link>
+                <span className={`w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ${selectedBackground === background.name ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={() => handleSelectBackground(background.name)}
+                    disabled={selectedBackground === background.name}
+                >
+                  {selectedBackground === background.name ? 'Selected' : 'Select'}
+                </span>
               </div>
             </div>
           ))}
