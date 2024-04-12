@@ -1,11 +1,9 @@
 'use client'
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from "next/link"; // Import Link from React Router
 
 export default function ScoreCalculation() {
-  const router = useRouter();
   // Array of objects containing score value and corresponding image URL
   const standardArray = [
     { score: 15, imageUrl: '/score/d15.png' },
@@ -53,24 +51,6 @@ export default function ScoreCalculation() {
     const score = e.dataTransfer.getData('score');
     if (score) {
       assignScore(ability, score);
-      if (ability == 'strength') {
-        localStorage.setItem('strength', score);
-      }
-      else if (ability == 'dexterity') {
-        localStorage.setItem('dexterity', score);
-      }
-      else if (ability == 'constitution') {
-        localStorage.setItem('constitution', score);
-      }
-      else if (ability == 'intelligence') {
-        localStorage.setItem('intelligence', score);
-      }
-      else if (ability == 'wisdom') {
-        localStorage.setItem('wisdom', score);
-      }
-      else if (ability == 'charisma') {
-        localStorage.setItem('charisma', score);
-      }
       const draggedScore = standardArray.find(item => item.score.toString() === score);
       e.target.innerHTML = `<img src=${draggedScore.imageUrl} alt="Score ${score}" class="score" style="width: 100px; height: 100px;">`;
 
@@ -100,27 +80,7 @@ export default function ScoreCalculation() {
       intelligence: '',
       wisdom: '',
       charisma: '',
-      
     });
-
-    if (ability == 'strength') {
-      localStorage.setItem('strength', '');
-    }
-    else if (ability == 'dexterity') {
-      localStorage.setItem('dexterity', '');
-    }
-    else if (ability == 'constitution') {
-      localStorage.setItem('constitution', '');
-    }
-    else if (ability == 'intelligence') {
-      localStorage.setItem('intelligence', '');
-    }
-    else if (ability == 'wisdom') {
-      localStorage.setItem('wisdom', '');
-    }
-    else if (ability == 'charisma') {
-      localStorage.setItem('charisma', '');
-    }
   };
 
   return (
@@ -179,7 +139,7 @@ export default function ScoreCalculation() {
         <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={resetDraggables}>
           Reset
         </button>
-        <Link href="/background"> 
+        <Link href="/background">
           <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-4">
             Submit Scores
           </button>
