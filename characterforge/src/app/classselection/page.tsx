@@ -1,8 +1,9 @@
 'use client'
 
-import Image from "next/image";
-import Link from "next/link";
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from "next/legacy/image";
+import Link from 'next/link';
 
 // Define an array of classes from the D&D Player's Handbook
 const classes = [
@@ -68,20 +69,21 @@ const classes = [
     },
   ];
 
-  const handleClassClick = (cls) => {
-    localStorage.setItem('selectedClass', cls.name);
-    console.log(localStorage.getItem('selectedClass'));
-    router.push('/score'); // Navigate to class selection page
-  }
-  
-
   export default function PickClass() {
+    const router = useRouter();
+
+    const handleClassClick = (cls) => {
+      localStorage.setItem('selectedClass', cls.name);
+      console.log(localStorage.getItem('selectedClass'));
+      router.push('/score'); // Navigate to score selection page
+    };
+  
     return (
       <main className="flex flex-col min-h-screen items-center justify-center p-24 bg-fantasy-landscape bg-cover">
         <h1 className="text-4xl font-bold text-center mb-12">Choose Your Class</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {classes.map((cls) => (
-            <Link key={cls.name} href="/score" passHref>
+             <div key={cls.name} className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer" onClick={() => handleClassClick(cls)}>
               <div className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer relative">
                 <Image src={cls.imageUrl} alt={cls.name} width={500} height={300} />
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex justify-center items-center">
@@ -92,7 +94,7 @@ const classes = [
                   </div>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
         <Link href="/character-summary">
