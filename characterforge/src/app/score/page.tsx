@@ -26,6 +26,7 @@ export default function ScoreCalculation() {
 
   // Function to get the available scores for a specific ability
   const getAvailableScores = (currentAbility) => {
+    console.log('Current ability:', currentAbility);
     const selectedScores = Object.values(scores).filter(val => val !== '');
     return standardArray.filter(score => !selectedScores.includes(score.toString()) || scores[currentAbility] === score.toString());
   };
