@@ -83,6 +83,16 @@ export default function ScoreCalculation() {
     });
   };
 
+  const handleSubmitScores = () => {
+    localStorage.setItem('strength', strength);
+    localStorage.setItem('dexterity', dexterity);
+    localStorage.setItem('constitution', constitution);
+    localStorage.setItem('intelligence', intelligence);
+    localStorage.setItem('wisdom', wisdom);
+    localStorage.setItem('charisma', charisma);
+    router.push('/background'); // Navigate to class selection page
+  }
+
   return (
     <main className="p-6">
       <h1 className="text-3xl font-bold mb-4 text-center">Assign Your Ability Scores</h1>
@@ -139,11 +149,9 @@ export default function ScoreCalculation() {
         <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={resetDraggables}>
           Reset
         </button>
-        <Link href="/background">
-          <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-4">
-            Submit Scores
-          </button>
-        </Link>
+        <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-4" onClick={ handleSubmitScores }>
+          Submit Scores
+        </button>
       </div>
     </main>
   );

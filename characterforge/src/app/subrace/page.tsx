@@ -75,18 +75,13 @@ export default function PickSubrace() {
       //Saving subraces for chosen race in an array
       const subracesForRace = allSubraces[selectedRaceName.toLowerCase()];
       setSubraces(subracesForRace || []);
-      console.log(subracesForRace);
     }
   }, []);
 
   // Function to handle clicking on a subrace
   const handleSubraceClick = (subrace) => {
     localStorage.setItem('selectedSubrace', subrace.name);
-    console.log(localStorage.getItem('selectedRace'));
-    console.log(localStorage.getItem('selectedSubrace'));
-    const selectedSubrace = subraces.name;
     router.push('/classselection'); // Navigate to class selection page
-    console.log(JSON.stringify(localStorage.getItem('selectedSubrace')));
   };
 
   if (!subraces.length) {
