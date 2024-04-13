@@ -85,7 +85,7 @@ const classes = [
           {classes.map((cls) => (
              <div key={cls.name} className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer" onClick={() => handleClassClick(cls)}>
               <div className="group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow cursor-pointer relative">
-                <Image src={cls.imageUrl} alt={cls.name} width={500} height={300} />
+                <Image src={cls.imageUrl} alt={cls.name} width={500} height={500} />
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex justify-center items-center">
                   {/* Ensure text container is not affecting the centering */}
                   <div className="text-center p-5 text-white">
@@ -97,9 +97,6 @@ const classes = [
             </div>
           ))}
         </div>
-        <Link href="/character-summary">
-          <span className="mt-12 text-lg text-gray-600 hover:text-gray-800 transition-colors">Next: Review Your Character →</span>
-        </Link>
       </main>
     );
   }
