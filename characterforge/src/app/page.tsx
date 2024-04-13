@@ -4,10 +4,18 @@ import Link from "next/link";
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-dungeon-bg dark:bg-dark-dungeon-bg bg-cover">
-      <div className="z-10 max-w-5xl w-full font-mono text-sm">
-        <div className="mb-32 grid place-items-center gap-10 text-center lg:grid-cols-2 lg:max-w-5xl lg:w-full lg:mb-0 lg:text-left">
+      <div className="relative w-full h-[300px]">
+        <Image src="/banner/banner.png" alt="Banner" width={1900} height={300}/>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-black bg-opacity-60 px-4 py-2 rounded">
+            <h1 className="text-4xl font-bold text-white">Welcome to CharacterForge</h1>
+          </div>
+        </div>
+      </div>
+      <div className="z-10 max-w-5xl w-full font-mono text-sm mt-10"> {/* Added mt-10 for margin top */}
+        <div className="flex flex-col items-center justify-center gap-10 text-center">
           <Link href="/charactercreation">
-            <span className="group">
+            <span className="group inline-block text-center">
               <h2 className="mb-3 text-2xl font-semibold">
                 Character Creation{" "}
                 <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
@@ -16,20 +24,6 @@ export default function Home() {
               </h2>
               <p className="m-0 max-w-[30ch] text-sm opacity-50">
                 Forge your hero with customizable classes, races, and abilities.
-              </p>
-            </span>
-          </Link>
-
-          <Link href="/hall">
-            <span className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
-              <h2 className="mb-3 text-2xl font-semibold">
-                Hall of Heroes{" "}
-                <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-                  -&gt;
-                </span>
-              </h2>
-              <p className="m-0 max-w-[30ch] text-sm opacity-50">
-                "Walk the halls where the echoes of valorous deeds resonate, and draw inspiration from the heroes of yore."
               </p>
             </span>
           </Link>
