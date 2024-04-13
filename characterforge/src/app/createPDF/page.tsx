@@ -27,18 +27,32 @@ const CharacterSheetPage = () => {
   useEffect(() => {
     // Load the PDF template and fill in the values
     const loadPdfTemplate = async () => {
-      const pdfTemplateBytes = await fetch('../../DnD_5E_CharacterSheet_FormFillable.pdf').then((res) => res.arrayBuffer());
+      const pdfTemplateBytes = await fetch('../DnD_5E_CharacterSheet_FormFillable.pdf').then((res) => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfTemplateBytes);
 
       const form = pdfDoc.getForm();
 
-      // Fill in the form fields
-      form.getTextFields().forEach((field) => {
-        const fieldName = field.getName();
-        if (characterData[fieldName]) {
-          field.setText(characterData[fieldName]);
-        }
-      });
+      const nameField = form.getTextField('CharacterName 2');
+      const ageField = form.getTextField('Age')
+      const heightField = form.getTextField('Height')
+      const weightField = form.getTextField('Weight')
+      const eyesField = form.getTextField('Eyes')
+      const skinField = form.getTextField('Skin')
+      const hairField = form.getTextField('Hair')
+
+      const alliesField = form.getTextField('Allies')
+      const factionField = form.getTextField('FactionName')
+      const backstoryField = form.getTextField('Backstory')
+      const traitsField = form.getTextField('Feat+Traits')
+      const treasureField = form.getTextField('Treasure')
+
+      nameField.setText('Mario')
+      ageField.setText('24 years')
+      heightField.setText(`5' 1"`)
+      weightField.setText('196 lbs')
+      eyesField.setText('blue')
+      skinField.setText('white')
+      hairField.setText('brown')
 
       const modifiedPdfBytes = await pdfDoc.save();
       setPdfBytes(modifiedPdfBytes);
