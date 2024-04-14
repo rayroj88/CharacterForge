@@ -124,6 +124,13 @@ const CharacterSheetPage = () => {
       const wisMod = form.getTextField('WISmod')
       const chaMod = form.getTextField('CHamod')
       const proMod = form.getTextField('ProfBonus')
+      const strST = form.getTextField('ST Strength')
+      const dexST = form.getTextField('ST Dexterity')
+      const conST = form.getTextField('ST Constitution')
+      const intST = form.getTextField('ST Intelligence')
+      const wisST = form.getTextField('ST Wisdom')
+      const chaST = form.getTextField('ST Charisma')
+
 
       if (subrace != null ) {
         raceField.setText(subrace); 
