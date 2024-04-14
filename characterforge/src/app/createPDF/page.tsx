@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { PDFDocument, PDFName, PDFWidgetAnnotation, rgb } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib';
 
 const CharacterSheetPage = () => {
   const [characterData, setCharacterData] = useState<any>({});
@@ -19,49 +19,63 @@ const CharacterSheetPage = () => {
       intelligence: localStorage.getItem('intelligence'),
       wisdom: localStorage.getItem('wisdom'),
       charisma: localStorage.getItem('charisma'),
+      background: localStorage.getItem('background'),
       // Add other character data properties here
     };
     setCharacterData(data);
   }, []);
 
   useEffect(() => {
-    // Load the PDF template and fill in the values
+    // Load the PDF template from the public folder
     const loadPdfTemplate = async () => {
       const pdfTemplateBytes = await fetch('/DnD_5E_CharacterSheet_FormFillable.pdf').then((res) => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfTemplateBytes);
 
       const form = pdfDoc.getForm();
 
-      const nameField = form.getTextField('CharacterName 2');
-      const ageField = form.getTextField('Age')
-      const heightField = form.getTextField('Height')
-      const weightField = form.getTextField('Weight')
-      const eyesField = form.getTextField('Eyes')
-      const skinField = form.getTextField('Skin')
-      const hairField = form.getTextField('Hair')
+      const race = localStorage.getItem('selectedRace');
+      const subrace = localStorage.getItem('selectedSubrace');
+      const characterClass = localStorage.getItem('selectedClass');
+      const strength = localStorage.getItem('strength');
+      const dexterity = localStorage.getItem('dexterity');
+      const constitution = localStorage.getItem('constitution');
+      const intelligence = localStorage.getItem('intelligence');
+      const wisdom = localStorage.getItem('wisdom');
+      const charisma = localStorage.getItem('charisma');
+      const background = localStorage.getItem('background');
 
-      const alliesField = form.getTextField('Allies')
-      const factionField = form.getTextField('FactionName')
-      const backstoryField = form.getTextField('Backstory')
-      const traitsField = form.getTextField('Feat+Traits')
-      const treasureField = form.getTextField('Treasure')
+      const raceField = form.getTextField('Race ');
+      const subraceField = form.getTextField('Features and Traits');
+      const characterClassField = form.getTextField('ClassLevel');
+      const strField = form.getTextField('STR');
+      const dexField = form.getTextField('DEX');
+      const conField = form.getTextField('CON');
+      const intField = form.getTextField('INT');
+      const wisField = form.getTextField('WIS');
+      const chaField = form.getTextField('CHA');
+      const backgroundField = form.getTextField('Background');
 
-      nameField.setText('Mario')
-      ageField.setText('24 years')
-      heightField.setText(`5' 1"`)
-      weightField.setText('196 lbs')
-      eyesField.setText('blue')
-      skinField.setText('white')
-      hairField.setText('brown')
+      raceField.setText(race);
+      subraceField.setText(subrace);
+      characterClassField.setText(characterClass);
+      strField.setText(strength);
+      dexField.setText(dexterity);
+      conField.setText(constitution);
+      intField.setText(intelligence);
+      wisField.setText(wisdom);
+      chaField.setText(charisma);
+      backgroundField.setText(background);
 
       const modifiedPdfBytes = await pdfDoc.save();
       setPdfBytes(modifiedPdfBytes);
     };
 
     loadPdfTemplate();
-  }, [characterData]);
+  }, []);
 
   const downloadPdf = () => {
+    if (!pdfBytes) return;
+
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
@@ -72,7 +86,7 @@ const CharacterSheetPage = () => {
   return (
     <div>
       {/* Render your character sheet content here */}
-      <button onClick={downloadPdf}>Download PDF</button>
+      {pdfBytes && <button onClick={downloadPdf}>Download PDF</button>}
     </div>
   );
 };
