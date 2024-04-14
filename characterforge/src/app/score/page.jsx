@@ -1,22 +1,18 @@
 'use client'
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from "next/link"; // Import Link from React Router
+import { useEffect, useState } from 'react';
+import Link from "next/link";
 
 export default function ScoreCalculation() {
-  const router = useRouter();
-  // Array of objects containing score value and corresponding image URL
   const standardArray = [
     { score: 15, imageUrl: '/score/d15.png' },
     { score: 14, imageUrl: '/score/d14.png' },
     { score: 13, imageUrl: '/score/d13.png' },
     { score: 12, imageUrl: '/score/d12.png' },
     { score: 10, imageUrl: '/score/d10.png' },
-    { score: 8, imageUrl: '/score/d8.png' }
+    { score: 8, imageUrl: '/score/d8.png' },
   ];
 
-  // State to keep track of score assignments to abilities
   const [scores, setScores] = useState({
     strength: '',
     dexterity: '',
@@ -26,101 +22,72 @@ export default function ScoreCalculation() {
     charisma: '',
   });
 
-  // Function to update score assignment
+  // Load scores from local storage when component mounts
+  useEffect(() => {
+    const loadedScores = {};
+    Object.keys(scores).forEach((ability) => {
+      loadedScores[ability] = localStorage.getItem(ability) || '';
+    });
+    setScores(loadedScores);
+  }, []);
+
   const assignScore = (ability, score) => {
     const updatedScores = { ...scores, [ability]: score };
-    const scoreValues = Object.values(updatedScores).filter(Boolean); // Filter out empty values
-    const isUnique = new Set(scoreValues).size === scoreValues.length; // Check if all values are unique
+    const scoreValues = Object.values(updatedScores).filter(Boolean);
+    const isUnique = new Set(scoreValues).size === scoreValues.length;
+
     if (isUnique) {
       setScores(updatedScores);
+      localStorage.setItem(ability, score); // Save the score in local storage
     } else {
       alert('Each ability must have a unique score.');
     }
   };
 
-  // Function to handle drag start event
   const handleDragStart = (e, score) => {
     e.dataTransfer.setData('score', score);
   };
 
-  // Function to handle drag over event
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  // Function to handle drop event
   const handleDrop = (e, ability) => {
     const score = e.dataTransfer.getData('score');
     if (score) {
       assignScore(ability, score);
-      if (ability == 'strength') {
-        localStorage.setItem('strength', score);
-      }
-      else if (ability == 'dexterity') {
-        localStorage.setItem('dexterity', score);
-      }
-      else if (ability == 'constitution') {
-        localStorage.setItem('constitution', score);
-      }
-      else if (ability == 'intelligence') {
-        localStorage.setItem('intelligence', score);
-      }
-      else if (ability == 'wisdom') {
-        localStorage.setItem('wisdom', score);
-      }
-      else if (ability == 'charisma') {
-        localStorage.setItem('charisma', score);
-      }
       const draggedScore = standardArray.find(item => item.score.toString() === score);
       e.target.innerHTML = `<img src=${draggedScore.imageUrl} alt="Score ${score}" class="score" style="width: 100px; height: 100px;">`;
 
       // Hide the dragged image
-      const draggedImage = document.getElementById(score); // Assuming your draggable image has the same id as its score
+      const draggedImage = document.getElementById(score);
       if (draggedImage) {
         draggedImage.style.display = 'none';
       }
     }
   };
 
-  // Function to reset all draggable objects
   const resetDraggables = () => {
-    // Show all draggable images
     standardArray.forEach(scoreObj => {
-      const draggableImage = document.getElementById(scoreObj.score);
+      const draggableImage = document.getElementById(scoreObj.score.toString());
       if (draggableImage) {
         draggableImage.style.display = 'block';
       }
     });
 
-    // Clear all scores
-    setScores({
+    const resetScores = {
       strength: '',
       dexterity: '',
       constitution: '',
       intelligence: '',
       wisdom: '',
       charisma: '',
-      
-    });
+    };
 
-    if (ability == 'strength') {
-      localStorage.setItem('strength', '');
-    }
-    else if (ability == 'dexterity') {
-      localStorage.setItem('dexterity', '');
-    }
-    else if (ability == 'constitution') {
-      localStorage.setItem('constitution', '');
-    }
-    else if (ability == 'intelligence') {
-      localStorage.setItem('intelligence', '');
-    }
-    else if (ability == 'wisdom') {
-      localStorage.setItem('wisdom', '');
-    }
-    else if (ability == 'charisma') {
-      localStorage.setItem('charisma', '');
-    }
+    setScores(resetScores);
+    Object.keys(resetScores).forEach(ability => {
+      localStorage.setItem(ability, ''); // Clear the stored score for each ability
+    });
   };
 
   return (
@@ -133,7 +100,7 @@ export default function ScoreCalculation() {
             <label className="mb-1">{ability.charAt(0).toUpperCase() + ability.slice(1)}:</label>
             <div
               className="ability-dropzone"
-              onDragOver={(e) => handleDragOver(e)}
+              onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, ability)}
               style={{
                 border: '1px solid white',
@@ -164,7 +131,7 @@ export default function ScoreCalculation() {
           {standardArray.map((scoreObj) => (
             <img
               key={scoreObj.score}
-              id={scoreObj.score}
+              id={scoreObj.score.toString()}
               src={scoreObj.imageUrl}
               alt={`Score ${scoreObj.score}`}
               className="score-draggable"
@@ -179,7 +146,7 @@ export default function ScoreCalculation() {
         <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" onClick={resetDraggables}>
           Reset
         </button>
-        <Link href="/background"> 
+        <Link href="/background">
           <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 ml-4">
             Submit Scores
           </button>
