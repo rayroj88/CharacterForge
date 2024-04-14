@@ -191,6 +191,7 @@ const CharacterSheetPage = () => {
       skinField.setText(skinColor);
       hairField.setText(hairColor);
 
+
       if (subrace != null ) {
         raceField.setText(subrace); 
       } 
