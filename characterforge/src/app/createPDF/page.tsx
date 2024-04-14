@@ -27,7 +27,7 @@ const CharacterSheetPage = () => {
   useEffect(() => {
     // Load the PDF template and fill in the values
     const loadPdfTemplate = async () => {
-      const pdfTemplateBytes = await fetch('../DnD_5E_CharacterSheet_FormFillable.pdf').then((res) => res.arrayBuffer());
+      const pdfTemplateBytes = await fetch('/DnD_5E_CharacterSheet_FormFillable.pdf').then((res) => res.arrayBuffer());
       const pdfDoc = await PDFDocument.load(pdfTemplateBytes);
 
       const form = pdfDoc.getForm();

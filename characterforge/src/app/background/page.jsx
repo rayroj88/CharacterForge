@@ -181,7 +181,6 @@ const backgrounds = [
     // Function to handle background selection
     const handleSelectBackground = (backgroundName) => {
       localStorage.setItem('background', backgroundName);
-      console.log(backgroundName);
       setSelectedBackground(backgroundName);
       router.push('/createPDF'); 
     };

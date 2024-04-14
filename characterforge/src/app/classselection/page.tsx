@@ -74,7 +74,6 @@ const classes = [
 
     const handleClassClick = (cls) => {
       localStorage.setItem('selectedClass', cls.name);
-      console.log(localStorage.getItem('selectedClass'));
       router.push('/score'); // Navigate to score selection page
     };
   
