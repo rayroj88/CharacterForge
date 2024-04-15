@@ -89,6 +89,7 @@ const CharacterSheetPage = () => {
   const [skinColor, setSkinColor] = useState('');
   const [hairColor, setHairColor] = useState('');
   const [focused, setFocused] = useState('');
+  const [alignment, setAlignment] = useState('');
 
   useEffect(() => {
     // Retrieve character data from localStorage
@@ -130,6 +131,7 @@ const CharacterSheetPage = () => {
 
       const form = pdfDoc.getForm();
 
+      const proficiencyBonus = +2;
       const bonus = "+2"
       const race = localStorage.getItem('selectedRace');
       const subrace = localStorage.getItem('selectedSubrace');
@@ -154,6 +156,7 @@ const CharacterSheetPage = () => {
       const hairField = form.getTextField('Hair');
       const speedField = form.getTextField('Speed');
       const nameField = form.getTextField('CharacterName');
+      const alignmentField = form.getTextField('Alignment')
       const hdField = form.getTextField('HD');
       const pasField = form.getTextField('Passive');
       const hpField = form.getTextField('HPCurrent');
@@ -181,7 +184,29 @@ const CharacterSheetPage = () => {
       const intST = form.getTextField('ST Intelligence')
       const wisST = form.getTextField('ST Wisdom')
       const chaST = form.getTextField('ST Charisma')
+      //Get Skill Check fields from pdf
+      const acrobatics = form.getTextField('Acrobatics')
+      const animalHandling = form.getTextField('Animal')
+      const arcana = form.getTextField('Arcana')
+      const athletics = form.getTextField('Athletics')
+      const deception = form.getTextField('Deception ')
+      const history = form.getTextField('History ')
+      const insight = form.getTextField('Insight')
+      const intimidation = form.getTextField('Intimidation')
+      const investigation = form.getTextField('Investigation ')
+      const medicine = form.getTextField('Medicine')
+      const nature = form.getTextField('Nature')
+      const perception = form.getTextField('Perception ')
+      const performance = form.getTextField('Performance')
+      const persuasion = form.getTextField('Persuasion')
+      const religion = form.getTextField('Religion')
+      const sleightOfHand = form.getTextField('SleightofHand')
+      const stealth = form.getTextField('Stealth ')
+      const survival = form.getTextField('Survival')
+      const totalHD = form.getTextField('HDTotal')
+      const proficiencies = classSavingThrowProficiencies[characterClass];
       
+      totalHD.setText('1');
       nameField.setText(characterName);
       name2Field.setText(characterName);
       ageField.setText(age);
@@ -219,6 +244,56 @@ const CharacterSheetPage = () => {
       maxHPField.setText(startingHealth.toString());
       pasField.setText(passiveWisdom.toString());
       hdField.setText(hitDie);
+      //Add Skill Checks
+      acrobatics.setText(calculateModifier(dexterity).toString())
+      animalHandling.setText(calculateModifier(wisdom).toString())
+      arcana.setText(calculateModifier(intelligence).toString())
+      athletics.setText(calculateModifier(strength).toString())
+      deception.setText(calculateModifier(charisma).toString())
+      history.setText(calculateModifier(intelligence).toString())
+      insight.setText(calculateModifier(wisdom).toString())
+      intimidation.setText(calculateModifier(charisma).toString())
+      investigation.setText(calculateModifier(intelligence).toString())
+      medicine.setText(calculateModifier(wisdom).toString())
+      nature.setText(calculateModifier(intelligence).toString())
+      perception.setText(calculateModifier(wisdom).toString())
+      performance.setText(calculateModifier(charisma).toString())
+      persuasion.setText(calculateModifier(charisma).toString())
+      religion.setText(calculateModifier(intelligence).toString())
+      sleightOfHand.setText(calculateModifier(dexterity).toString())
+      stealth.setText(calculateModifier(dexterity).toString())
+      survival.setText(calculateModifier(wisdom).toString())
+      strST.setText(calculateModifier(strength).toString());
+      dexST.setText(calculateModifier(dexterity).toString())
+      conST.setText(calculateModifier(constitution).toString());
+      intST.setText(calculateModifier(intelligence).toString());
+      wisST.setText(calculateModifier(wisdom).toString());
+      chaST.setText(calculateModifier(charisma).toString());
+      alignmentField.setText(alignment);
+
+      // Initialize saving throw modifiers without proficiency bonus
+      let strSave = parseInt(calculateModifier(strength), 10);
+      let dexSave = parseInt(calculateModifier(dexterity), 10);
+      let conSave = parseInt(calculateModifier(constitution), 10);
+      let intSave = parseInt(calculateModifier(intelligence), 10);
+      let wisSave = parseInt(calculateModifier(wisdom), 10);
+      let chaSave = parseInt(calculateModifier(charisma), 10);
+
+      // Add proficiency bonus to saving throws the character is proficient in
+      if (proficiencies.includes('strength')) strSave += proficiencyBonus;
+      if (proficiencies.includes('dexterity')) dexSave += proficiencyBonus;
+      if (proficiencies.includes('constitution')) conSave += proficiencyBonus;
+      if (proficiencies.includes('intelligence')) intSave += proficiencyBonus;
+      if (proficiencies.includes('wisdom')) wisSave += proficiencyBonus;
+      if (proficiencies.includes('charisma')) chaSave += proficiencyBonus;
+
+      // Convert numeric saving throw values to strings with sign (+/-) before setting them in the PDF
+      strST.setText((strSave >= 0 ? "+" : "") + strSave.toString());
+      dexST.setText((dexSave >= 0 ? "+" : "") + dexSave.toString());
+      conST.setText((conSave >= 0 ? "+" : "") + conSave.toString());
+      intST.setText((intSave >= 0 ? "+" : "") + intSave.toString());
+      wisST.setText((wisSave >= 0 ? "+" : "") + wisSave.toString());
+      chaST.setText((chaSave >= 0 ? "+" : "") + chaSave.toString());
 
       const actualRace = (subrace || race); // Use subrace if available, otherwise use race
       const speed = raceToSpeed[actualRace];
@@ -230,7 +305,28 @@ const CharacterSheetPage = () => {
     };
 
     loadPdfTemplate();
-  }, [characterName, age, height, weight, eyeColor, skinColor, hairColor]);
+  }, [characterName, age, height, weight, eyeColor, skinColor, hairColor, alignment]);
+
+  const createAlignmentDropdown = (selectedAlignment, setSelectedAlignment) => (
+  <select
+    style={{ ...styles.input, ...(focused === 'Alignment' && styles.inputFocus) }}
+    value={selectedAlignment}
+    onChange={(e) => setSelectedAlignment(e.target.value)}
+    onFocus={() => setFocused('Alignment')}
+    onBlur={() => setFocused('')}
+  >
+    <option value="">Select Alignment</option>
+    <option value="Lawful Good">Lawful Good</option>
+    <option value="Neutral Good">Neutral Good</option>
+    <option value="Chaotic Good">Chaotic Good</option>
+    <option value="Lawful Neutral">Lawful Neutral</option>
+    <option value="True Neutral">True Neutral</option>
+    <option value="Chaotic Neutral">Chaotic Neutral</option>
+    <option value="Lawful Evil">Lawful Evil</option>
+    <option value="Neutral Evil">Neutral Evil</option>
+    <option value="Chaotic Evil">Chaotic Evil</option>
+  </select>
+);
 
   const downloadPdf = () => {
     if (!pdfBytes) return;
@@ -302,8 +398,9 @@ const CharacterSheetPage = () => {
       {createInput("Eye Color", eyeColor, setEyeColor)}
       {createInput("Skin Tone", skinColor, setSkinColor)}
       {createInput("Hair Color", hairColor, setHairColor)}
+      {createAlignmentDropdown(alignment, setAlignment)}
       
-      <button style={styles.button} onClick={() => downloadPdf()}>Download PDF</button>
+      <button style={styles.button} onClick={() => downloadPdf()}>Download Character Sheet</button>
     </div>
   );
 };
