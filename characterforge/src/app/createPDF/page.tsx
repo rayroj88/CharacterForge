@@ -51,7 +51,7 @@ const raceToSpeed = {
   'Mountain Dwarf': '25ft',
   'High Elf': '30ft',
   'Wood Elf': '35ft',
-  'Dark Elf': '30ft', // Drow
+  'Drow': '30ft', // Drow
   'Lightfoot Halfling': '25ft',
   'Stout Halfling': '25ft',
   'Forest Gnome': '25ft',
@@ -63,19 +63,19 @@ const raceToSpeed = {
   // Add other subraces if necessary
 };
 
-const classSavingThrowProficiencies = {
-  Barbarian: ['strength', 'constitution'],
-  bard: ['dexterity', 'charisma'],
-  Cleric: ['wisdom', 'charisma'],
-  Druid: ['intelligence', 'wisdom'],
-  Fighter: ['strength', 'constitution'],
-  Monk: ['strength', 'dexterity'],
-  Paladin: ['wisdom', 'charisma'],
-  Ranger: ['strength', 'dexterity'],
-  Rogue: ['dexterity', 'intelligence'],
-  Sorcerer: ['constitution', 'charisma'],
-  Warlock: ['wisdom', 'charisma'],
-  Wizard: ['intelligence', 'wisdom'],
+//const classSavingThrowProficiencies = {
+  //Barbarian: ['strength', 'constitution'],
+  //bard: ['dexterity', 'charisma'],
+  //Cleric: ['wisdom', 'charisma'],
+  //Druid: ['intelligence', 'wisdom'],
+  //Fighter: ['strength', 'constitution'],
+  //Monk: ['strength', 'dexterity'],
+  //Paladin: ['wisdom', 'charisma'],
+  //Ranger: ['strength', 'dexterity'],
+  //Rogue: ['dexterity', 'intelligence'],
+  //Sorcerer: ['constitution', 'charisma'],
+  //Warlock: ['wisdom', 'charisma'],
+  //Wizard: ['intelligence', 'wisdom'],
 };
 
 const CharacterSheetPage = () => {
@@ -131,7 +131,7 @@ const CharacterSheetPage = () => {
 
       const form = pdfDoc.getForm();
 
-      const proficiencyBonus = +2;
+      //const proficiencyBonus = +2;
       const bonus = "+2"
       const race = localStorage.getItem('selectedRace');
       const subrace = localStorage.getItem('selectedSubrace');
@@ -204,7 +204,7 @@ const CharacterSheetPage = () => {
       const stealth = form.getTextField('Stealth ')
       const survival = form.getTextField('Survival')
       const totalHD = form.getTextField('HDTotal')
-      const proficiencies = classSavingThrowProficiencies[characterClass];
+      //const proficiencies = classSavingThrowProficiencies[characterClass];
       
       totalHD.setText('1');
       nameField.setText(characterName);
@@ -272,28 +272,28 @@ const CharacterSheetPage = () => {
       alignmentField.setText(alignment);
 
       // Initialize saving throw modifiers without proficiency bonus
-      let strSave = parseInt(calculateModifier(strength), 10);
-      let dexSave = parseInt(calculateModifier(dexterity), 10);
-      let conSave = parseInt(calculateModifier(constitution), 10);
-      let intSave = parseInt(calculateModifier(intelligence), 10);
-      let wisSave = parseInt(calculateModifier(wisdom), 10);
-      let chaSave = parseInt(calculateModifier(charisma), 10);
+      //let strSave = parseInt(calculateModifier(strength), 10);
+      //let dexSave = parseInt(calculateModifier(dexterity), 10);
+      //let conSave = parseInt(calculateModifier(constitution), 10);
+      //let intSave = parseInt(calculateModifier(intelligence), 10);
+      //let wisSave = parseInt(calculateModifier(wisdom), 10);
+      //let chaSave = parseInt(calculateModifier(charisma), 10);
 
       // Add proficiency bonus to saving throws the character is proficient in
-      if (proficiencies.includes('strength')) strSave += proficiencyBonus;
-      if (proficiencies.includes('dexterity')) dexSave += proficiencyBonus;
-      if (proficiencies.includes('constitution')) conSave += proficiencyBonus;
-      if (proficiencies.includes('intelligence')) intSave += proficiencyBonus;
-      if (proficiencies.includes('wisdom')) wisSave += proficiencyBonus;
-      if (proficiencies.includes('charisma')) chaSave += proficiencyBonus;
+      //if (proficiencies.includes('strength')) strSave += proficiencyBonus;
+      //if (proficiencies.includes('dexterity')) dexSave += proficiencyBonus;
+      //if (proficiencies.includes('constitution')) conSave += proficiencyBonus;
+      //if (proficiencies.includes('intelligence')) intSave += proficiencyBonus;
+      //if (proficiencies.includes('wisdom')) wisSave += proficiencyBonus;
+      //if (proficiencies.includes('charisma')) chaSave += proficiencyBonus;
 
       // Convert numeric saving throw values to strings with sign (+/-) before setting them in the PDF
-      strST.setText((strSave >= 0 ? "+" : "") + strSave.toString());
-      dexST.setText((dexSave >= 0 ? "+" : "") + dexSave.toString());
-      conST.setText((conSave >= 0 ? "+" : "") + conSave.toString());
-      intST.setText((intSave >= 0 ? "+" : "") + intSave.toString());
-      wisST.setText((wisSave >= 0 ? "+" : "") + wisSave.toString());
-      chaST.setText((chaSave >= 0 ? "+" : "") + chaSave.toString());
+      //strST.setText((strSave >= 0 ? "+" : "") + strSave.toString());
+      //dexST.setText((dexSave >= 0 ? "+" : "") + dexSave.toString());
+      //conST.setText((conSave >= 0 ? "+" : "") + conSave.toString());
+      //intST.setText((intSave >= 0 ? "+" : "") + intSave.toString());
+      //wisST.setText((wisSave >= 0 ? "+" : "") + wisSave.toString());
+      //chaST.setText((chaSave >= 0 ? "+" : "") + chaSave.toString());
 
       const actualRace = (subrace || race); // Use subrace if available, otherwise use race
       const speed = raceToSpeed[actualRace];

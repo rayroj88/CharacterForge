@@ -31,7 +31,7 @@ const allSubraces = {
       imageUrl: '/sub/woodelf.png',
     },
     {
-      name: 'Dark Elf (Drow)',
+      name: 'Drow',
       description: 'Drow are adept in dark magic, with superior vision in darkness.',
       imageUrl: '/sub/drow.png',
     },
