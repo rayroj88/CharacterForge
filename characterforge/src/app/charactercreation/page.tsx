@@ -15,11 +15,23 @@ export default function PickRace() {
     { name: "Gnome", description: "Diminutive, intelligent, and curious, with a natural aptitude for magic and a love of craftsmanship and invention.", imageUrl: "/race/gnome2.png", hasSubraces: true },
     { name: "Half-Elf", description: "Blending the traits of elves and humans, half-elves are versatile, charismatic, and capable of mastering a variety of skills.", imageUrl: "/race/halfelf.png", hasSubraces: false },
     { name: "Half-Orc", description: "Combining the best features of humans and orcs, half-orcs are strong, resilient, and intimidating.", imageUrl: "/race/halforc.png", hasSubraces: false },
-    { name: "Tiefling", description: "Bearing the bloodline of a fiend, tieflings have a natural inclination towards magic and typically carry a daunting presence.", imageUrl: "/race/tiefling.png", hasSubraces: true },
+    { name: "Tiefling", description: "Bearing the bloodline of a fiend, tieflings have a natural inclination towards magic and typically carry a daunting presence.", imageUrl: "/race/tiefling.png", hasSubraces: false },
     ];
   
 
     const router = useRouter(); // make sure to import useRouter
+
+    //Clear localStorage values
+    localStorage.setItem('selectedRace', "");
+    localStorage.setItem('selectedSubrace', "");
+    localStorage.setItem('selectedClass', "");
+    localStorage.setItem('strength', "");
+    localStorage.setItem('dexterity', "");
+    localStorage.setItem('constitution', "");
+    localStorage.setItem('intelligence', "");
+    localStorage.setItem('wisdom', "");
+    localStorage.setItem('charisma', "");
+    localStorage.setItem('background', "");
 
     // Function to handle race selection
     const selectRace = (race) => {

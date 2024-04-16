@@ -76,7 +76,7 @@ const raceToSpeed = {
   //Sorcerer: ['constitution', 'charisma'],
   //Warlock: ['wisdom', 'charisma'],
   //Wizard: ['intelligence', 'wisdom'],
-};
+//};
 
 const CharacterSheetPage = () => {
   const [characterData, setCharacterData] = useState<any>({});

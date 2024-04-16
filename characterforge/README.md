@@ -49,6 +49,8 @@ Then open [http://localhost:3000](http://localhost:3000) with your browser to se
 * The Collection of data such as Name, height, weight, ect... is unrefined and the drop down menu ideally should be removed.
 * Storage needs to be move to a database.
 * Application needs to be hosted or packaged as an app via Electron or simular products. 
+* Tiefling doesn't seem to show up on race on the PDF.
+* Some top fields on the PDF don't show up some of the time.
 
 ## Acknowledgements
 * All art generated using the [Hotpot.ai](https://hotpot.ai/)
